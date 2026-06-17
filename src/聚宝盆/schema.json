@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "系统": {
+      "type": "object",
+      "properties": {
+        "当前时间": {
+          "default": "第1日·清晨",
+          "type": "string"
+        },
+        "当前地点": {
+          "default": "青云宗·杂役院",
+          "type": "string"
+        },
+        "剧情阶段": {
+          "default": "初遇",
+          "type": "string"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "修为境界": {
+          "default": "练气",
+          "type": "string",
+          "enum": [
+            "练气",
+            "筑基",
+            "金丹",
+            "元婴",
+            "化神",
+            "合体",
+            "大乘",
+            "渡劫"
+          ]
+        },
+        "修为进度": {
+          "default": 0,
+          "type": "number"
+        },
+        "下品灵石": {
+          "default": 3,
+          "type": "number"
+        },
+        "中品灵石": {
+          "default": 0,
+          "type": "number"
+        },
+        "上品灵石": {
+          "default": 0,
+          "type": "number"
+        },
+        "宗门贡献": {
+          "default": 0,
+          "type": "number"
+        },
+        "宗门职位": {
+          "default": "杂役弟子",
+          "type": "string"
+        },
+        "持有物品": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "已学功法": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "当前装备的功法": {
+          "default": "",
+          "type": "string"
+        },
+        "穿着": {
+          "default": "灰色破旧短褐",
+          "type": "string"
+        },
+        "身体状况": {
+          "default": "健康",
+          "type": "string",
+          "enum": [
+            "健康",
+            "轻伤",
+            "重伤",
+            "中毒",
+            "濒危"
+          ]
+        }
+      }
+    },
+    "聚宝盆": {
+      "type": "object",
+      "properties": {
+        "冷却状态": {
+          "default": true,
+          "type": "boolean"
+        },
+        "盆内物品": {
+          "default": "",
+          "type": "string"
+        },
+        "剩余时间": {
+          "default": "",
+          "type": "string"
+        },
+        "_复制记录": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "物品名": {
+                "type": "string"
+              },
+              "品质": {
+                "type": "string"
+              },
+              "日期": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "物品名",
+              "品质",
+              "日期"
+            ]
+          }
+        }
+      }
+    },
+    "宗门": {
+      "type": "object",
+      "properties": {
+        "宗门态势": {
+          "default": "平静",
+          "type": "string",
+          "enum": [
+            "平静",
+            "暗流",
+            "危机"
+          ]
+        },
+        "宗门事件": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "人际关系": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "随机NPC关系": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "友好",
+          "冷漠",
+          "敌对"
+        ]
+      }
+    },
+    "秘境": {
+      "type": "object",
+      "properties": {
+        "当前活跃秘境": {
+          "default": "",
+          "type": "string"
+        },
+        "开启倒计时": {
+          "default": "",
+          "type": "string"
+        },
+        "已探索秘境": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "任务": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "状态": {
+            "default": "未开始",
+            "type": "string",
+            "enum": [
+              "未开始",
+              "进行中",
+              "已完成",
+              "失败"
+            ]
+          },
+          "来源": {
+            "default": "",
+            "type": "string"
+          },
+          "描述": {
+            "default": "",
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "系统",
+    "user",
+    "聚宝盆",
+    "宗门",
+    "秘境"
+  ]
+}
