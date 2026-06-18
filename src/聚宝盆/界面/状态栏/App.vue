@@ -17,38 +17,67 @@
     </div>
 
     <div class="grid-3col">
-      <div class="pane">
-        <div class="pane-title">修为</div>
-        <div class="pane-row"><span>境界</span><span class="em">{{ sd.user?.修为境界 || '练气' }}</span></div>
+      <div class="pane" style="gap:0;align-content:start">
         <div class="pane-row"><span>职位</span><span>{{ sd.user?.宗门职位 || '—' }}</span></div>
-        <div class="pane-row"><span>穿着</span><span class="mu">{{ sd.user?.穿着 || '—' }}</span></div>
-        <div class="pane-row"><span>身体</span><span :class="'hp-txt-'+hpCls">{{ sd.user?.身体状况 || '健康' }}</span></div>
-        <div class="pane-row"><span>功法</span><span>{{ techs.length + ' 门' }}{{ eq ? ' · ' + eq : '' }}</span></div>
+        <details class="rpane-details" style="margin:0" open>
+          <summary class="rpane-summary" style="padding:2px 0;border-top:none;margin:0;font-size:11px;color:var(--c-gold-dark);font-family:var(--font-title);letter-spacing:0.12em">
+            <span>功法</span>
+            <span class="rpane-info" style="font-size:10px;color:var(--c-ink-muted);font-family:var(--font-body);letter-spacing:0">{{ techs.length }} 门{{ eq ? ' · ' + eq : '' }}</span>
+            <span class="fold-chev2">›</span>
+          </summary>
+          <div class="rpane-body" style="padding:0">
+            <div class="tech-strip" style="padding:2px 0;gap:2px;flex-wrap:wrap">
+              <span v-for="t in techs" :key="t" class="tech-tag" :class="{ active: t===eq }">{{ t }}<span v-if="t===eq" class="eq-dot">●</span></span>
+              <span v-if="!techs.length" class="mu" style="font-size:10px">无</span>
+            </div>
+          </div>
+        </details>
+        <div class="pane-row"><span>穿着</span><span class="mu" style="white-space:pre-wrap;text-align:left;overflow:visible">{{ sd.user?.穿着 || '—' }}</span></div>
       </div>
 
       <div class="pane" style="grid-column:2 / 4">
-        <div class="pane-title">灵石</div>
-        <div class="split-inline">
-          <div class="split-inline-left">
-            <div class="pane-row"><span>下品</span><span>{{ sd.user?.下品灵石 ?? 0 }}</span></div>
-            <div class="pane-row"><span>中品</span><span>{{ sd.user?.中品灵石 ?? 0 }}</span></div>
-            <div class="pane-row"><span>上品</span><span>{{ sd.user?.上品灵石 ?? 0 }}</span></div>
-            <div class="pane-row"><span>贡献</span><span>{{ sd.user?.宗门贡献 ?? 0 }}</span></div>
-          </div>
-          <div class="split-inline-right">
-            <div class="present" style="border:none;margin:0;padding:0">
-              <div class="pane-title" style="margin-top:0">在场</div>
-              <div class="present-chars">
-                <div v-for="(v,n) in rels" :key="n" class="present-card">
-                  <span class="present-card-name">{{ n }}</span>
-                  <span class="present-card-aff">好感 {{ v }}</span>
-                </div>
-                <div v-for="(a,n) in npcs" :key="'n'+n" class="present-card">
-                  <span class="present-card-name">{{ n }}</span>
-                  <span :class="'present-card-st present-card-st-'+a">{{ a }}</span>
-                </div>
-                <span v-if="!relKeys.length && !npcKeys.length" class="mu" style="font-size:10px;padding:4px 0">—</span>
+        <div class="split-inline" style="gap:0">
+          <div style="flex:1;display:flex;flex-direction:column">
+            <details class="ls-wrap" open>
+              <summary class="ls-hd">
+                <span class="ls-title">灵石</span>
+                <span class="fold-chev2">›</span>
+              </summary>
+              <div class="ls-body">
+                <div class="pane-row"><span>下品</span><span>{{ sd.user?.下品灵石 ?? 0 }}</span></div>
+                <div class="pane-row"><span>中品</span><span>{{ sd.user?.中品灵石 ?? 0 }}</span></div>
+                <div class="pane-row"><span>上品</span><span>{{ sd.user?.上品灵石 ?? 0 }}</span></div>
+                <div class="pane-row"><span>贡献</span><span>{{ sd.user?.宗门贡献 ?? 0 }}</span></div>
               </div>
+            </details>
+            <details class="bag-wrap" open>
+              <summary class="bag-hd">
+                <span class="ls-title" style="border:none">储物袋</span>
+                <span class="fold-chev2">›</span>
+              </summary>
+              <div class="bag-body">
+                <div v-if="pouchCatKeys.length" v-for="(catItems, catName) in pouchCats" :key="catName" class="cat-group">
+                  <div class="cat-title">{{ catName }}</div>
+                  <div class="tags" style="padding:1px 0 3px">
+                    <span v-for="(q,n) in catItems" :key="n" class="tag">{{ n }}<span class="tag-qty">×{{ q }}</span></span>
+                  </div>
+                </div>
+                <div v-if="!pouchCatKeys.length" class="empty" style="padding:2px 0;text-align:left;font-size:10px">空</div>
+              </div>
+            </details>
+          </div>
+          <div class="split-inline-right" style="flex:1;border-left:2px solid var(--c-ink);padding:10px 12px">
+            <div class="pane-title" style="margin-top:0">在场</div>
+            <div class="present-chars">
+              <div v-for="(v,n) in rels" :key="n" class="present-card">
+                <span class="present-card-name">{{ n }}</span>
+                <span class="present-card-aff">好感 {{ v }}</span>
+              </div>
+              <div v-for="(a,n) in npcs" :key="'n'+n" class="present-card">
+                <span class="present-card-name">{{ n }}</span>
+                <span :class="'present-card-st present-card-st-'+a">{{ a }}</span>
+              </div>
+              <span v-if="!relKeys.length && !npcKeys.length" class="mu" style="font-size:10px;padding:4px 0">—</span>
             </div>
           </div>
         </div>
@@ -72,18 +101,29 @@
         </details>
       </div>
 
-      <div class="split-right">
-        <div class="pane-title" style="margin:10px 12px 0">秘境 · 宗门</div>
+      <div class="split-right" style="display:flex;flex-direction:column">
+        <div class="pane-title" style="margin:10px 12px 0">秘境</div>
         <details class="rpane-details" style="margin:0 12px 6px" open>
           <summary class="rpane-summary" style="padding:4px 0;margin-top:2px">
-            <span class="rpane-info">{{ sd.秘境?.当前活跃秘境 || '无秘境' }} · {{ sd.宗门?.宗门态势 || '—' }}</span>
+            <span class="rpane-info">{{ sd.秘境?.当前活跃秘境 || '无秘境' }}</span>
             <span class="fold-chev2">›</span>
           </summary>
           <div class="rpane-body" style="padding:2px 0">
             <div class="pane-row"><span>活跃秘境</span><span>{{ sd.秘境?.当前活跃秘境 || '无' }}</span></div>
             <div class="pane-row"><span>开启倒计时</span><span>{{ sd.秘境?.开启倒计时 || '—' }}</span></div>
             <div class="pane-row"><span>已探索</span><span>{{ (sd.秘境?.已探索秘境?.length || 0) + ' 个' }}</span></div>
-            <div class="pane-row" v-if="sd.宗门?.宗门事件"><span>事件</span><span class="mu">{{ sd.宗门.宗门事件 }}</span></div>
+          </div>
+        </details>
+        <details class="rpane-details" style="margin:0 12px 6px" open>
+          <summary class="rpane-summary" style="padding:4px 0;margin-top:2px">
+            <span class="rpane-info">其他秘境</span>
+            <span class="fold-chev2">›</span>
+          </summary>
+          <div class="rpane-body" style="padding:2px 0">
+            <div v-if="otherRealmKeys.length" v-for="(status, name) in otherRealms" :key="name" class="pane-row">
+              <span>{{ name }}</span><span class="mu" style="font-size:10px">{{ status }}</span>
+            </div>
+            <div v-else class="empty" style="padding:2px 0;text-align:left;font-size:10px">暂无</div>
           </div>
         </details>
       </div>
@@ -92,7 +132,7 @@
     <div class="rel-section">
       <details class="rpane-details" style="margin:0" open>
         <summary class="rpane-summary" style="padding:10px 14px;border-top:2px solid var(--c-ink);margin:0">
-          <span class="fold-label" style="font-size:12px;letter-spacing:0.12em;color:var(--c-ink)">关系</span>
+          <span class="fold-label" style="font-size:12px;font-family:var(--font-title);letter-spacing:0.12em;color:var(--c-gold-dark)">关系</span>
           <span class="rpane-info">{{ relKeys.length + npcKeys.length }} 个</span>
           <span class="fold-chev2">›</span>
         </summary>
@@ -114,18 +154,21 @@
 
     <details class="inv-block">
       <summary class="inv-summary">
-        <span class="inv-label">物品</span>
-        <span class="inv-info">{{ itemKeys.length + techs.length }} 项</span>
+        <span class="inv-label">仓库</span>
+        <span class="inv-info">{{ storeCatKeys.length + techs.length }} 项</span>
         <span class="fold-chev2">›</span>
       </summary>
       <div class="inv-body">
-        <div v-if="itemKeys.length" class="tags">
-          <span v-for="(q,n) in items" :key="n" class="tag">{{ n }}<span class="tag-qty">×{{ q }}</span></span>
+        <div v-if="storeCatKeys.length" v-for="(catItems, catName) in storeCats" :key="catName" class="cat-group">
+          <div class="cat-title">{{ catName }}</div>
+          <div class="tags" style="padding:1px 0 3px">
+            <span v-for="(q,n) in catItems" :key="n" class="tag">{{ n }}<span class="tag-qty">×{{ q }}</span></span>
+          </div>
         </div>
         <div v-if="techs.length" class="tech-strip">
           <span v-for="t in techs" :key="t" class="tech-tag" :class="{ active: t===eq }">{{ t }}<span v-if="t===eq" class="eq-dot">●</span></span>
         </div>
-        <div v-if="!itemKeys.length && !techs.length" class="empty">无</div>
+        <div v-if="!storeCatKeys.length && !techs.length" class="empty">空</div>
       </div>
     </details>
 
@@ -166,10 +209,42 @@ const npcs = computed(() => sd.value?.随机NPC关系 || {});
 const tasks = computed(() => sd.value?.任务 || {});
 const taskKeys = computed(() => Object.keys(tasks.value));
 const npcKeys = computed(() => Object.keys(npcs.value));
-const items = computed(() => sd.value?.user?.持有物品 || {});
-const itemKeys = computed(() => Object.keys(items.value));
+const pouchItems = computed(() => sd.value?.user?.储物袋 || {});
+const pouchCats = computed(() => {
+  const raw = sd.value?.user?.储物袋分类 || {};
+  const grouped: Record<string, Record<string, number>> = {};
+  for (const [name, qty] of Object.entries(pouchItems.value)) {
+    const cat = raw[name] || '其他';
+    if (!grouped[cat]) grouped[cat] = {};
+    grouped[cat][name] = qty;
+  }
+  return grouped;
+});
+const pouchCatKeys = computed(() => Object.keys(pouchCats.value));
+
+const storeItems = computed(() => sd.value?.user?.仓库 || {});
+const storeCats = computed(() => {
+  const raw = sd.value?.user?.仓库分类 || {};
+  const grouped: Record<string, Record<string, number>> = {};
+  for (const [name, qty] of Object.entries(storeItems.value)) {
+    const cat = raw[name] || '其他';
+    if (!grouped[cat]) grouped[cat] = {};
+    grouped[cat][name] = qty;
+  }
+  return grouped;
+});
+const storeCatKeys = computed(() => Object.keys(storeCats.value));
 const techs = computed(() => sd.value?.user?.已学功法 || []);
 const eq = computed(() => sd.value?.user?.当前装备的功法 || '');
+
+const allRealms = computed(() => sd.value?.秘境?.秘境列表 || {});
+const activeRealm = computed(() => sd.value?.秘境?.当前活跃秘境 || '');
+const otherRealms = computed(() => {
+  const rest = { ...allRealms.value };
+  delete rest[activeRealm.value];
+  return rest;
+});
+const otherRealmKeys = computed(() => Object.keys(otherRealms.value));
 
 const hpCls = computed(() => {
   const h = sd.value?.user?.身体状况 || '健康';
@@ -257,20 +332,20 @@ const sectStCls = computed(() => {
 .hp-txt-warn { color: var(--c-calm); }
 .hp-txt-bad { color: var(--c-harm); font-weight: 600; }
 
-.grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--c-stroke); }
-.grid-2col { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--c-stroke); }
+.grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 2px solid var(--c-ink); }
+.grid-2col { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 2px solid var(--c-ink); }
 
-.pane { padding: 10px 12px; border-right: 1px solid var(--c-stroke); display: grid; gap: 3px; }
+.pane { padding: 10px 12px; border-right: 2px solid var(--c-ink); display: grid; gap: 3px; }
 .pane:last-child { border-right: none; }
 .rpane { border-right: none; display: block; padding: 0; }
 .rpane .pane-title { margin: 10px 12px 0; }
 
 .split-row {
-  display: flex; border-bottom: 1px solid var(--c-stroke);
+  display: flex; border-bottom: 2px solid var(--c-ink);
   min-height: 0;
 }
 .split-left {
-  width: 50%; border-right: 1px solid var(--c-stroke);
+  width: 50%; border-right: 2px solid var(--c-ink);
   flex-shrink: 0; display: flex; flex-direction: column;
 }
 .split-right {
@@ -284,13 +359,51 @@ const sectStCls = computed(() => {
   flex: 1;
 }
 .split-inline-right {
-  flex: 1; border-left: 1px solid var(--c-stroke); padding-left: 12px;
+  flex: 1; border-left: 2px solid var(--c-ink); padding-left: 12px;
+}
+
+.ls-wrap {
+  border: none; margin: 0;
+}
+.ls-hd {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 12px; cursor: pointer; user-select: none;
+  list-style: none;
+  border-bottom: 2px solid var(--c-ink);
+}
+.ls-hd::-webkit-details-marker { display: none; }
+.ls-title {
+  font-size: 11px; font-weight: 700; font-family: var(--font-title);
+  letter-spacing: 0.12em; color: var(--c-gold-dark);
+}
+.ls-body {
+  padding: 6px 12px 8px;
+  animation: fold-open 0.2s ease;
+}
+
+.bag-wrap {
+  border: none; margin: 0;
+}
+.bag-hd {
+  display: flex; align-items: center; gap: 4px;
+  cursor: pointer; user-select: none; list-style: none;
+  padding: 3px 0; font-size: 11px;
+  border-top: 1px dashed var(--c-ink-muted); margin-top: 3px;
+}
+.bag-hd::-webkit-details-marker { display: none; }
+.bag-body { padding: 2px 0 0; animation: fold-open 0.2s ease; }
+
+.cat-group { margin-bottom: 2px; }
+.cat-group:last-child { margin-bottom: 0; }
+.cat-title {
+  font-size: 9px; color: var(--c-ink-muted);
+  letter-spacing: 0.08em; padding: 0;
 }
 
 .pane-title {
   font-size: 11px; font-weight: 700; font-family: var(--font-title);
   letter-spacing: 0.12em; color: var(--c-gold-dark);
-  border-bottom: 1px solid rgba(139,105,20,0.2);
+  border-bottom: 2px solid var(--c-ink);
   padding-bottom: 3px; margin-bottom: 2px;
 }
 
@@ -320,7 +433,7 @@ details[open] .fold-chev2 { transform: rotate(90deg); }
   display: flex; align-items: center; gap: 6px;
   padding: 6px 0; cursor: pointer; user-select: none;
   font-size: 11px; color: var(--c-ink-muted); list-style: none;
-  border-top: 1px dashed var(--c-stroke); margin-top: 4px;
+  border-top: 2px solid var(--c-ink); margin-top: 4px;
 }
 .rpane-summary::-webkit-details-marker { display: none; }
 .rpane-info { flex: 1; }
@@ -354,9 +467,9 @@ details[open] .fold-chev2 { transform: rotate(90deg); }
 .npc-st-冷漠 { color: var(--c-neutral); }
 .npc-st-敌对 { color: var(--c-hostile); font-weight: 600; }
 
-.pd-top { padding-top: 4px; border-top: 1px dashed var(--c-stroke); margin-top: 2px; }
+.pd-top { padding-top: 4px; border-top: 2px solid var(--c-ink); margin-top: 2px; }
 
-.present { border-top: 1px dashed var(--c-stroke); margin-top: 4px; padding-top: 2px; }
+.present { border-top: 2px solid var(--c-ink); margin-top: 4px; padding-top: 2px; }
 .present-chars { display: flex; flex-wrap: wrap; gap: 4px; padding: 2px 0; }
 .present-card {
   display: grid; gap: 1px;
@@ -406,9 +519,9 @@ details[open] .fold-chev2 { transform: rotate(90deg); }
   .grid-3col { grid-template-columns: 1fr; }
   .grid-3col .pane { grid-column: auto !important; border-right: none; }
   .split-row { flex-direction: column; }
-  .split-left { border-right: none; border-bottom: 1px solid var(--c-stroke); padding: 8px; }
+  .split-left { border-right: none; border-bottom: 2px solid var(--c-ink); padding: 8px; }
   .split-inline { flex-direction: column; }
-  .split-inline-right { border-left: none; padding-left: 0; padding-top: 6px; border-top: 1px dashed var(--c-stroke); }
+  .split-inline-right { border-left: none; padding-left: 0; padding-top: 6px; border-top: 2px solid var(--c-ink); }
   .strip { padding: 6px 8px; gap: 4px; font-size: 11px; }
   .pane { padding: 8px; }
   .split-left { padding: 8px; }

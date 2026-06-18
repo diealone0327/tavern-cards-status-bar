@@ -3,6 +3,7 @@
   "type": "object",
   "properties": {
     "系统": {
+      "default": {},
       "type": "object",
       "properties": {
         "当前时间": {
@@ -20,6 +21,7 @@
       }
     },
     "user": {
+      "default": {},
       "type": "object",
       "properties": {
         "修为境界": {
@@ -58,7 +60,14 @@
         },
         "宗门职位": {
           "default": "杂役弟子",
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "杂役弟子",
+            "外门弟子",
+            "内门弟子",
+            "真传弟子",
+            "长老"
+          ]
         },
         "持有物品": {
           "default": {},
@@ -68,6 +77,56 @@
           },
           "additionalProperties": {
             "type": "number"
+          }
+        },
+        "物品分类": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "储物袋": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "储物袋分类": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "仓库": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "仓库分类": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
           }
         },
         "已学功法": {
@@ -99,6 +158,7 @@
       }
     },
     "聚宝盆": {
+      "default": {},
       "type": "object",
       "properties": {
         "冷却状态": {
@@ -139,6 +199,7 @@
       }
     },
     "宗门": {
+      "default": {},
       "type": "object",
       "properties": {
         "宗门态势": {
@@ -182,6 +243,7 @@
       }
     },
     "秘境": {
+      "default": {},
       "type": "object",
       "properties": {
         "当前活跃秘境": {
@@ -196,6 +258,16 @@
           "default": [],
           "type": "array",
           "items": {
+            "type": "string"
+          }
+        },
+        "秘境列表": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
             "type": "string"
           }
         }
@@ -231,12 +303,5 @@
         }
       }
     }
-  },
-  "required": [
-    "系统",
-    "user",
-    "聚宝盆",
-    "宗门",
-    "秘境"
-  ]
+  }
 }
