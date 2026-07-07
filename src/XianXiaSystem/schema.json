@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "系统": {
+      "type": "object",
+      "properties": {
+        "积分": {
+          "default": 0,
+          "type": "number"
+        },
+        "今日签到": {
+          "default": false,
+          "type": "boolean"
+        },
+        "今日任务": {
+          "default": false,
+          "type": "boolean"
+        },
+        "当前日期": {
+          "default": "",
+          "type": "string"
+        },
+        "系统任务内容": {
+          "default": "",
+          "type": "string"
+        },
+        "系统任务进度": {
+          "default": 0,
+          "type": "number"
+        },
+        "系统任务奖励": {
+          "default": "",
+          "type": "string"
+        },
+        "宗门任务内容": {
+          "default": "",
+          "type": "string"
+        },
+        "宗门任务进度": {
+          "default": 0,
+          "type": "number"
+        },
+        "宗门任务奖励": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "主角": {
+      "type": "object",
+      "properties": {
+        "姓名": {
+          "default": "",
+          "type": "string"
+        },
+        "年龄": {
+          "default": 18,
+          "type": "number"
+        },
+        "性别": {
+          "default": "",
+          "type": "string"
+        },
+        "掩盖修为": {
+          "default": "",
+          "type": "string"
+        },
+        "境界": {
+          "default": "炼气",
+          "type": "string",
+          "enum": [
+            "炼气",
+            "筑基",
+            "金丹",
+            "元婴",
+            "化神",
+            "合体",
+            "大乘",
+            "渡劫"
+          ]
+        },
+        "小境界": {
+          "default": 1,
+          "type": "number"
+        },
+        "修为进度": {
+          "default": 0,
+          "type": "number"
+        },
+        "寿元": {
+          "default": 150,
+          "type": "number"
+        },
+        "灵石": {
+          "default": 0,
+          "type": "number"
+        },
+        "属性": {
+          "type": "object",
+          "properties": {
+            "长度": {
+              "default": 10,
+              "type": "number"
+            },
+            "粗度": {
+              "default": 3,
+              "type": "number"
+            },
+            "硬度": {
+              "default": 3,
+              "type": "number"
+            },
+            "耐久度": {
+              "default": 30,
+              "type": "number"
+            },
+            "精液量": {
+              "default": 100,
+              "type": "number"
+            }
+          }
+        },
+        "道具": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "丹药": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "法宝": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "武器": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "技能": {
+          "type": "object",
+          "properties": {
+            "NSFW技能": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "修为技能": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "生活技能": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "属性",
+        "技能"
+      ]
+    },
+    "NPC关系": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "好感度": {
+            "default": 30,
+            "type": "number"
+          },
+          "沉沦": {
+            "default": 0,
+            "type": "number"
+          },
+          "性别": {
+            "default": "",
+            "type": "string"
+          },
+          "年纪": {
+            "default": 0,
+            "type": "number"
+          },
+          "修为": {
+            "default": "",
+            "type": "string"
+          },
+          "小境界": {
+            "default": 1,
+            "type": "number"
+          },
+          "修为进度": {
+            "default": 0,
+            "type": "number"
+          },
+          "瓶颈": {
+            "default": false,
+            "type": "boolean"
+          },
+          "寿元": {
+            "default": 150,
+            "type": "number"
+          }
+        }
+      }
+    },
+    "当前互动NPC": {
+      "default": "",
+      "type": "string"
+    }
+  },
+  "required": [
+    "系统",
+    "主角"
+  ]
+}
