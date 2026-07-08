@@ -4,6 +4,7 @@ import { computed } from 'vue';
 const props = defineProps<{
   protagonist?: {
     姓名?: string;
+    年龄?: number;
     灵石?: number;
     寿元?: number;
     身体强化?: {
@@ -49,6 +50,10 @@ const displayName = computed(() => {
 
     <div class="divider" />
 
+    <div class="stat-row">
+      <span class="stat-label">年龄</span>
+      <span class="stat-value primary">{{ protagonist.年龄 ?? '?' }}岁</span>
+    </div>
     <div class="stat-row">
       <span class="stat-label">灵石</span>
       <span class="stat-value primary">🪙 {{ protagonist.灵石 ?? 0 }}</span>
