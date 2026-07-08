@@ -22,7 +22,7 @@
           "type": "string"
         },
         "系统任务内容": {
-          "default": "",
+          "default": "到西院杂务房报到，熟悉宗门环境",
           "type": "string"
         },
         "系统任务进度": {
@@ -55,46 +55,47 @@
           "type": "string"
         },
         "年龄": {
-          "default": 18,
+          "default": 16,
           "type": "number"
         },
         "性别": {
           "default": "",
           "type": "string"
         },
-        "掩盖修为": {
-          "default": "",
-          "type": "string"
-        },
-        "境界": {
-          "default": "炼气",
-          "type": "string",
-          "enum": [
-            "炼气",
-            "筑基",
-            "金丹",
-            "元婴",
-            "化神",
-            "合体",
-            "大乘",
-            "渡劫"
-          ]
-        },
-        "小境界": {
-          "default": 1,
-          "type": "number"
-        },
-        "修为进度": {
+        "灵石": {
           "default": 0,
           "type": "number"
         },
         "寿元": {
-          "default": 150,
+          "default": 100,
           "type": "number"
         },
-        "灵石": {
-          "default": 0,
-          "type": "number"
+        "身体强化": {
+          "default": {
+            "力量": 1,
+            "速度": 1,
+            "防御": 1,
+            "抗性": 1
+          },
+          "type": "object",
+          "properties": {
+            "力量": {
+              "default": 1,
+              "type": "number"
+            },
+            "速度": {
+              "default": 1,
+              "type": "number"
+            },
+            "防御": {
+              "default": 1,
+              "type": "number"
+            },
+            "抗性": {
+              "default": 1,
+              "type": "number"
+            }
+          }
         },
         "属性": {
           "type": "object",

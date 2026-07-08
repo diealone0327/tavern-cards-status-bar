@@ -51,6 +51,7 @@ function toggle(key: string) {
               <span class="stat-value success">{{ taskData.系统任务奖励 }}</span>
             </div>
           </div>
+          <div v-else-if="taskData?.今日任务" class="task-empty">✅ 今日系统任务已完成，明日再来</div>
           <div v-else class="task-empty">今日暂无系统任务，输入"做任务"接取</div>
         </div>
       </div>

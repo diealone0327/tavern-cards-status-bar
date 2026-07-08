@@ -14,7 +14,6 @@ const panelOpen = ref(false);
 const catOpen = ref<Set<string>>(new Set());
 
 const passiveSkills = new Set([
-  '自动修炼', '百分之百突破', '精元转化', '小境界无瓶颈', '炼丹精通', '炼器精通', '阵法精通',
   '精液疗伤', '精液灌体',
   '玉液功', '催情香体', '灵舌术',
   '琴心', '棋魂', '书道', '画骨', '厨神之手', '品茶宗师', '品酒宗师', '花艺', '舞艺', '房中术', '医术精通', '阵法入门',
@@ -22,17 +21,9 @@ const passiveSkills = new Set([
 
 const skillDesc: Record<string, string> = {
   // 修为技能
-  '自动修炼': '每日修为进度自动+1',
-  '百分之百突破': '大境界突破免疫天雷，必定成功',
-  '精元转化': '射精时精元转化为修为，+20~30进度',
   '精液疗伤': '射在伤口上可快速愈合',
   '精液灌体': '射入体内提升对方修为+5~10，每日限一次',
   '精液破障': '跳过对方当前一个小境界',
-  '小境界无瓶颈': '小境界自动晋升，无需突破剧情',
-  '炼丹精通': '掌握基础至宗师级炼丹术',
-  '炼器精通': '掌握基础至宗师级炼器术',
-  '阵法精通': '掌握基础至宗师级阵道',
-  '修为掩盖': '设置虚假修为对外展示，不能超过实际修为',
   // NSFW技能
   '玉液功': '精液附带催情效果',
   '共感链接': '指定两人建立感官链接，共享触觉快感',
@@ -61,7 +52,7 @@ const categories = computed(() => {
   if (props.attributes) {
     cats.push({
       key: '肉身属性', icon: '📏',
-      label: '肉身属性',
+      label: 'NSFW属性',
       items: Object.entries(props.attributes).map(([k, v]) => ({
         label: ({ 长度: '📏 长度', 粗度: '🔄 粗度', 硬度: '⛰️ 硬度', 耐久度: '🛡️ 耐久度', 精液量: '💧 精液量' } as Record<string, string>)[k] || k,
         val: v ?? 0,
@@ -109,7 +100,7 @@ function toggle(key: string) {
 <template>
   <div class="card">
     <div class="card-title fold-toggle" @click="panelOpen = !panelOpen">
-      <span>◎ 肉身·技能</span>
+      <span>◎ NSFW·技能</span>
       <span class="fold-arrow">{{ panelOpen ? '▼' : '▶' }}</span>
     </div>
     <div v-if="panelOpen" class="fold-body">
