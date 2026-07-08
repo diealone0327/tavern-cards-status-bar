@@ -150,6 +150,13 @@
             "type": "string"
           }
         },
+        "功法": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "技能": {
           "type": "object",
           "properties": {
@@ -203,11 +210,19 @@
             "default": "",
             "type": "string"
           },
+          "描述": {
+            "default": "",
+            "type": "string"
+          },
           "年纪": {
             "default": 0,
             "type": "number"
           },
           "修为": {
+            "default": "",
+            "type": "string"
+          },
+          "灵根": {
             "default": "",
             "type": "string"
           },
@@ -233,6 +248,13 @@
     "当前互动NPC": {
       "default": "",
       "type": "string"
+    },
+    "当前场景NPC": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "required": [

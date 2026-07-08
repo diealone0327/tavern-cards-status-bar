@@ -22,10 +22,7 @@ const d = computed(() => store.data);
     <ProtagonistPanel :protagonist="d?.主角" />
 
     <!-- 当前在场角色 -->
-    <CurrentScene
-      :current-npc="d?.当前互动NPC"
-      :relations="d?.NPC关系"
-    />
+    <CurrentScene :current-npc="d?.当前互动NPC" />
 
     <!-- 肉身属性 + 已学技能 -->
     <AttributesSkillsPanel
@@ -43,7 +40,7 @@ const d = computed(() => store.data);
     />
 
     <!-- 系统商城（可折叠） -->
-    <ShopPanel />
+    <ShopPanel :protagonist="d?.主角" />
   </div>
 </template>
 

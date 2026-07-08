@@ -1,10 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { shopCategories } from '../shop-data';
+
+const props = defineProps<{
+  protagonist?: {
+    技能?: { NSFW技能?: string[]; 修为技能?: string[]; 生活技能?: string[] };
+    功法?: string[];
+  };
+}>();
 
 const panelOpen = ref(false);
 const openCategories = ref<Set<number>>(new Set());
 const openItems = ref<Set<string>>(new Set());
+
+const ownedItems = computed(() => {
+  const s = new Set<string>();
+  const sk = props.protagonist?.技能;
+  if (sk) {
+    (sk.NSFW技能 || []).forEach(n => s.add(n));
+    (sk.修为技能 || []).forEach(n => s.add(n));
+    (sk.生活技能 || []).forEach(n => s.add(n));
+  }
+  (props.protagonist?.功法 || []).forEach(n => s.add(n));
+  return s;
+});
+
+function isOwned(name: string) {
+  return ownedItems.value.has(name);
+}
 
 function toggleCategory(idx: number) {
   const s = new Set(openCategories.value);
@@ -48,7 +71,8 @@ function toggleItem(key: string) {
           >
             <div class="shop-item-header" @click="toggleItem(cat.name + '|' + item.name)">
               <span class="shop-item-name">{{ item.name }}</span>
-              <span v-if="item.note.includes('被动')" class="stype-tag passive">被动</span>
+              <span v-if="isOwned(item.name)" class="stype-tag" style="background:rgba(107,191,89,0.15);color:var(--c-success);font-size:9px;">已购买</span>
+              <span v-else-if="item.note.includes('被动')" class="stype-tag passive">被动</span>
               <span v-else-if="item.note.includes('主动')" class="stype-tag active">主动</span>
               <span class="shop-item-price">{{ item.price }}</span>
               <span class="shop-arrow tiny">{{ openItems.has(cat.name + '|' + item.name) ? '−' : '+' }}</span>

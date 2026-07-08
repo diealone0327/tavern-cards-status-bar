@@ -1,14 +1,13 @@
 <script setup lang="ts">
 defineProps<{
   currentNpc?: string;
-  relations?: Record<string, { 好感度?: number; 沉沦?: number; 寿元?: number }>;
 }>();
 </script>
 
 <template>
   <div class="card">
-    <div class="card-title">◈ 当前在场</div>
-    <div v-if="currentNpc && currentNpc !== ''" class="scene-npc-tag tag tag-primary" style="font-size: 13px; padding: 2px 10px;">
+    <div class="card-title">◈ 当前互动</div>
+    <div v-if="currentNpc && currentNpc !== ''" class="scene-npc-tag tag tag-primary" style="font-size:13px;padding:2px 10px;display:inline-block;">
       {{ currentNpc }}
     </div>
     <div v-else class="item-tag empty">—</div>

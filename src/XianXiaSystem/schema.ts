@@ -36,6 +36,7 @@ export const Schema = z.object({
     丹药: z.array(z.string()).prefault([]),
     法宝: z.array(z.string()).prefault([]),
     武器: z.array(z.string()).prefault([]),
+    功法: z.array(z.string()).prefault([]),
     技能: z.object({
       NSFW技能: z.array(z.string()).prefault([]),
       修为技能: z.array(z.string()).prefault([]),
@@ -47,8 +48,10 @@ export const Schema = z.object({
     好感度: z.coerce.number().transform(v => _.clamp(v, 0, 300)).prefault(30),
     沉沦: z.coerce.number().prefault(0),
     性别: z.string().prefault(''),
+    描述: z.string().prefault(''),
     年纪: z.coerce.number().prefault(0),
     修为: z.string().prefault(''),
+    灵根: z.string().prefault(''),
     小境界: z.coerce.number().transform(v => _.clamp(v, 1, 9)).prefault(1),
     修为进度: z.coerce.number().prefault(0),
     瓶颈: z.boolean().prefault(false),
@@ -56,5 +59,7 @@ export const Schema = z.object({
   })).prefault({}),
   // ── 当前互动NPC ──
   当前互动NPC: z.string().prefault(''),
+  // ── 当前场景NPC（在场所有有名有姓的NPC名单） ──
+  当前场景NPC: z.array(z.string()).prefault([]),
 });
 export type Schema = z.output<typeof Schema>;
