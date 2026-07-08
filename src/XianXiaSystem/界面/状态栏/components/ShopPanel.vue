@@ -63,10 +63,6 @@ function toggleItem(key: string) {
                 <span class="stat-label">备注</span>
                 <span class="stat-value" style="text-align: right; max-width: 200px;">{{ item.note }}</span>
               </div>
-              <div class="stat-row" v-if="item.灵石价">
-                <span class="stat-label">灵石价</span>
-                <span class="stat-value primary">{{ item.灵石价 }}</span>
-              </div>
             </div>
           </div>
         </div>
@@ -79,7 +75,7 @@ function toggleItem(key: string) {
         <div class="shop-rule-item">积分兑换，概不退换</div>
         <div class="shop-rule-item">商品库存无限，每次兑换立即生效</div>
         <div class="shop-rule-item">道具和技能为系统独有，修仙界不存在</div>
-        <div class="shop-rule-item">标有灵石价的丹药可用灵石代替积分支付</div>
+        <div class="shop-rule-item">所有商品均可用灵石支付（1积分=10灵石），身体强化除外</div>
       </div>
     </div>
   </div>
