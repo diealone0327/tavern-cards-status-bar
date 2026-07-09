@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 
 const props = defineProps<{
-  protagonist?: { 道具?: string[]; 丹药?: string[]; 法宝?: string[]; 武器?: string[]; 功法?: string[]; };
+  protagonist?: { 道具?: string[]; 丹药?: string[]; 法宝?: string[]; 武器?: string[]; 功法?: string[]; 杂物?: string[]; };
 }>();
 
 const panelOpen = ref(false);
@@ -45,18 +45,55 @@ const itemDesc: Record<string, string> = {
   '延寿丹': '寿元增加10年，突破境界时延寿效果保留',
   '破界丹': '直接突破当前大境界（无视天劫）',
   // 法宝
-  '金蛟剪': '金属性极品法宝，双刃交错可斩断同阶法宝',
-  '青木灵杖': '木属性极品法宝，蕴含生机催生灵药治愈重伤',
-  '玄水珠': '水属性极品法宝，操控万水凝聚冰霜攻防一体',
-  '离火旗': '火属性极品法宝，烈焰滔天可布离火大阵',
-  '厚土印': '土属性极品法宝，引大地之力镇敌困敌',
-  '天机镜': '通用型上古异宝，镜光破虚妄洞察本源',
+  '金梭镖': '金属性法器·极品。三枚金梭遥控飞行攻击，穿梭如电',
+  '青藤索': '木属性法器·极品。化青藤缠绕目标汲取灵力',
+  '分水珠': '水属性法器·极品。分开水流，水下自由活动一个时辰',
+  '烈火旗': '火属性法器·极品。挥动烈焰升腾，布简易火阵困敌',
+  '玄土罩': '土属性法器·极品。土黄护罩挡中阶法术攻击',
+  '万象令': '通用型法器·极品。记录一道低阶法术每日复放一次',
+  '金刚圈': '金属性灵器·极品。金环攻守兼备，套敌禁锢回旋切割',
+  '青木鼎': '木属性灵器·极品。催生灵药培植，炼化草木精华炼丹',
+  '玄冰鉴': '水属性灵器·极品。千年玄冰冰封目标反射法术',
+  '紫火钟': '火属性灵器·极品。紫火升腾焚尽万物，扣敌无法脱身',
+  '厚土幡': '土属性灵器·极品。召土墙石壁落石如雨困敌石牢',
+  '混元伞': '通用型灵器·极品。撑开挡各类属性攻击，收拢作兵器',
+  '金罡环': '金属性仙器·极品。金罡之气切割万物挡者披靡',
+  '青帝灵藤': '木属性仙器·极品。万藤齐发囚敌汲取修为',
+  '玄冥珠': '水属性仙器·极品。玄冥真水冰封千里召滔天巨浪',
+  '离天鼎': '火属性仙器·极品。鼎中离火炼化万物返本归元',
+  '镇天印': '土属性仙器·极品。山岳虚影镇杀强敌万钧压顶',
+  '周天盘': '通用型仙器·极品。推演天机卜算吉凶，布周天星辰大阵',
+  '金蛟剪': '金属性神器·极品。双刃如蛟剪尾可斩同阶法宝护甲',
+  '青木灵杖': '木属性神器·极品。生机治愈重伤，修炼事半功倍',
+  '玄水珠': '水属性神器·极品。操控万水凝聚冰霜攻防一体',
+  '离火旗': '火属性神器·极品。烈焰滔天布离火大阵焚尽八方',
+  '厚土印': '土属性神器·极品。引大地之力镇敌困敌如山岳压顶',
+  '天机镜': '通用型神器·极品。镜光破虚妄洞察本源映照千里',
   // 武器
-  '金罡剑': '金属性极品武器，剑气凌厉附带金罡破甲',
-  '青木弓': '木属性极品武器，无箭凝气为矢汲取灵力',
-  '碧水剑': '水属性极品武器，剑势连绵以柔克刚',
-  '赤火枪': '火属性极品武器，烈焰席卷霸道无匹',
-  '玄黄斧': '土属性极品武器，一斧劈下势不可挡',
+  '金锋剑': '金属性法器·极品。飞剑锋锐无匹附带切割之力',
+  '青木剑': '木属性法器·极品。剑身蕴草木生机，挥剑催藤蔓缠绕',
+  '碧波剑': '水属性法器·极品。剑势连绵以柔克刚如碧波荡漾',
+  '赤焰剑': '火属性法器·极品。剑身赤焰缠绕，一剑烈焰席卷',
+  '玄石剑': '土属性法器·极品。玄铁精石铸剑，一剑碎石裂地',
+  '归元剑': '通用型法器·极品。锋锐随修为提升，各类修士皆宜',
+  '金虹剑': '金属性灵器·极品。剑出金虹贯日剑气纵横百丈',
+  '青冥剑': '木属性灵器·极品。剑出青虹贯日，木灵之力生生不息',
+  '寒冰剑': '水属性灵器·极品。千年寒冰凝剑身冻经脉气血',
+  '紫炎剑': '火属性灵器·极品。剑身紫炎升腾，一剑焚百里',
+  '厚土剑': '土属性灵器·极品。大地之力凝剑锋，一剑如山岳压顶',
+  '无极剑': '通用型灵器·极品。剑身幻化万千，无招无式无迹',
+  '天罡剑': '金属性仙器·极品。天罡星辰淬炼一剑出万法破',
+  '长生剑': '木属性仙器·极品。剑蕴世界树生机，中者生机流逝',
+  '沧浪剑': '水属性仙器·极品。剑势如沧海浪潮绵绵不绝',
+  '焚天剑': '火属性仙器·极品。剑引九天神火，一剑焚天煮海',
+  '不动明王剑': '土属性仙器·极品。大地之力凝剑罡，不动如山万法不破',
+  '混沌剑': '通用型仙器·极品。混沌玄铁所铸，一剑斩因果破万法',
+  '金罡剑': '金属性神器·极品。金精玄铁铸就剑气无坚不摧',
+  '青灵剑': '木属性神器·极品。剑蕴万年木灵，生机尽收灵力枯竭',
+  '碧水剑': '水属性神器·极品。剑势连绵以柔克刚附带水雾迷幻',
+  '赤霄剑': '火属性神器·极品。剑引赤霄神火，一剑横扫万里焦土',
+  '玄黄剑': '土属性神器·极品。玄黄重铁所铸，一剑大地开裂山川崩',
+  '七星剑': '通用型神器·极品。北斗七星引星辰之力无属性限制',
   // 功法
   '金煌斩天诀': '金属性至高功法，修炼至大成可斩破虚空',
   '青木长生诀': '木属性至高功法，修炼至大成枯木逢春断肢重生',
@@ -79,25 +116,58 @@ const itemDesc: Record<string, string> = {
   '敛息术': '隐匿修为气息的秘术，高一大境界方可看破',
   '望气术': '瞳术秘术，可观他人修为境界辨识灵物宝光',
   // NSFW技能
-  '玉液功': '精液附带催情效果，对方摄入后情欲大幅提升',
-  '采补术': '双修时从对方吸取修为转化为己用',
-  '共感链接': '指定两人建立感官链接，共享触觉快感',
-  '魅惑之瞳': '对视让对方陷入恍惚，服从指令',
-  '催情香体': '身体散发淡淡催情香气',
-  '灵舌术': '舌头灵活度和敏感度大幅提升',
-  '体态随心': '可微调自身身材比例和体态',
+  '玉液功': '被动技能。精液附带催情效果，对方摄入后情欲大幅提升',
+  '共感链接': '主动技能。指定两人建立感官链接，共享触觉快感',
+  '入梦': '主动技能。进入他人梦境，交流或窥探记忆秘密',
+  '透视眼': '主动技能。看穿衣物墙壁，透视储物袋或灵力流转',
+  '催情香体': '被动技能。身体散发淡淡催情香气，对异性有轻微催情效果',
+  '灵舌术': '被动技能。舌头灵活度和敏感度大幅提升',
+  '加藤鹰之手': '被动技能。手指灵活度和敏感度大幅提升，手技出神入化',
   // 修为技能
-  '精液疗伤': '射在伤口上可快速愈合',
-  '精液灌体': '射入体内提升对方修为+5~10，对方每日限一次',
-  '精液破障': '跳过对方当前一个小境界',
+  '精液疗伤': '被动技能。射精时精液自动具备疗伤效果，射在伤口上可快速愈合',
+  '精液灌体': '被动技能。射入时自动提升对方修为+5~10，无使用限制',
+  '精液破障': '被动技能。射入时检测瓶颈，有瓶颈则突破瓶颈+小境界+1，无瓶颈不触发',
 };
+
+const itemTier: Record<string, string> = {
+  '金梭镖': '法器', '青藤索': '法器', '分水珠': '法器', '烈火旗': '法器', '玄土罩': '法器', '万象令': '法器',
+  '金刚圈': '灵器', '青木鼎': '灵器', '玄冰鉴': '灵器', '紫火钟': '灵器', '厚土幡': '灵器', '混元伞': '灵器',
+  '金罡环': '仙器', '青帝灵藤': '仙器', '玄冥珠': '仙器', '离天鼎': '仙器', '镇天印': '仙器', '周天盘': '仙器',
+  '金蛟剪': '神器', '青木灵杖': '神器', '玄水珠': '神器', '离火旗': '神器', '厚土印': '神器', '天机镜': '神器',
+  '金锋剑': '法器', '青木剑': '法器', '碧波剑': '法器', '赤焰剑': '法器', '玄石剑': '法器', '归元剑': '法器',
+  '金虹剑': '灵器', '青冥剑': '灵器', '寒冰剑': '灵器', '紫炎剑': '灵器', '厚土剑': '灵器', '无极剑': '灵器',
+  '天罡剑': '仙器', '长生剑': '仙器', '沧浪剑': '仙器', '焚天剑': '仙器', '不动明王剑': '仙器', '混沌剑': '仙器',
+  '金罡剑': '神器', '青灵剑': '神器', '碧水剑': '神器', '赤霄剑': '神器', '玄黄剑': '神器', '七星剑': '神器',
+};
+
+const TIERS = ['法器', '灵器', '仙器', '神器'];
+
+function normalizeName(n: string): string {
+  return n.replace(/[（(]?\s*[×x×X]\s*\d+\s*[）)]?/g, '').trim();
+}
 
 function groupItems(items: string[]): { name: string; count: number }[] {
   const map = new Map<string, number>();
-  for (const item of items) {
-    map.set(item, (map.get(item) || 0) + 1);
+  for (const raw of items) {
+    const name = normalizeName(raw);
+    // 从原始名字中提取数量: "回灵丹×5" → +5, "回灵丹(×3)" → +3, "回灵丹" → +1
+    const m = raw.match(/[×xX]\s*(\d+)/);
+    const add = m ? parseInt(m[1], 10) : 1;
+    map.set(name, (map.get(name) || 0) + add);
   }
   return Array.from(map.entries()).map(([name, count]) => ({ name, count }));
+}
+
+interface InvSubCat {
+  name: string;
+  items: { name: string; count: number }[];
+}
+
+interface InvCategory {
+  label: string;
+  icon: string;
+  items: { name: string; count: number }[];
+  subCategories?: InvSubCat[];
 }
 
 const categories = computed(() => {
@@ -109,9 +179,24 @@ const categories = computed(() => {
     ['法宝', '🔮', p.法宝 || []],
     ['武器', '⚔️', p.武器 || []],
     ['功法', '📖', p.功法 || []],
+    ['其他', '📦', p.杂物 || []],
   ];
-  return config
-    .map(([label, icon, items]) => ({ label, icon, items: items.length > 0 ? groupItems(items) : [{ name: '（空）', count: 0 }] }));
+  return config.map(([label, icon, items]): InvCategory => {
+    if (label !== '法宝' && label !== '武器') {
+      return { label, icon, items: items.length > 0 ? groupItems(items) : [{ name: '（空）', count: 0 }] };
+    }
+    // 法宝/武器按等级分组
+    const tierMap: Record<string, { name: string; count: number }[]> = {};
+    TIERS.forEach(t => tierMap[t] = []);
+    const grouped = groupItems(items);
+    grouped.forEach(it => {
+      const t = itemTier[it.name];
+      if (t && tierMap[t]) tierMap[t].push(it);
+    });
+    const subs: InvSubCat[] = TIERS.filter(t => tierMap[t].length > 0).map(t => ({ name: t, items: tierMap[t] }));
+    if (subs.length === 0) subs.push({ name: '（空）', items: [{ name: '（空）', count: 0 }] });
+    return { label, icon, items: [], subCategories: subs };
+  });
 });
 
 function toggle(key: string) {
@@ -134,13 +219,37 @@ function toggle(key: string) {
           <span class="fold-arrow small">{{ catOpen.has(cat.label) ? '▼' : '▶' }}</span>
         </div>
         <div v-if="catOpen.has(cat.label)" class="fold-cat-body">
-          <div v-for="item in cat.items" :key="item.name" class="inv-item" :class="{ empty: item.count === 0 }">
-            <div class="inv-header" @click="expandedItems.has(item.name) ? expandedItems.delete(item.name) : expandedItems.add(item.name)">
-              <span>{{ cat.icon }} {{ item.name }}<span v-if="item.count > 1" class="item-count"> ×{{ item.count }}</span></span>
-              <span v-if="item.count > 0" class="fold-arrow tiny">{{ expandedItems.has(item.name) ? '−' : '+' }}</span>
+
+          <!-- 子目录: 按等级 -->
+          <div v-if="cat.subCategories">
+            <div v-for="sub in cat.subCategories" :key="sub.name" class="inv-subcat">
+              <div class="inv-subcat-header" @click="expandedItems.has('_s_'+sub.name) ? expandedItems.delete('_s_'+sub.name) : expandedItems.add('_s_'+sub.name)">
+                <span>{{ sub.name }}</span>
+                <span class="fold-arrow tiny">{{ expandedItems.has('_s_'+sub.name) ? '▼' : '▶' }}</span>
+              </div>
+              <div v-if="expandedItems.has('_s_'+sub.name)" class="inv-subcat-body">
+                <div v-for="item in sub.items" :key="item.name" class="inv-item">
+                  <div class="inv-header" @click="expandedItems.has(item.name) ? expandedItems.delete(item.name) : expandedItems.add(item.name)">
+                    <span>{{ item.name }}<span v-if="item.count > 0" class="item-count"> ×{{ item.count }}</span></span>
+                    <span class="fold-arrow tiny">{{ expandedItems.has(item.name) ? '−' : '+' }}</span>
+                  </div>
+                  <div v-if="expandedItems.has(item.name) && itemDesc[item.name]" class="inv-desc">{{ itemDesc[item.name] }}</div>
+                </div>
+              </div>
             </div>
-            <div v-if="expandedItems.has(item.name) && itemDesc[item.name]" class="inv-desc">{{ itemDesc[item.name] }}</div>
           </div>
+
+          <!-- 无子目录: 平铺 -->
+          <div v-if="!cat.subCategories">
+            <div v-for="item in cat.items" :key="item.name" class="inv-item" :class="{ empty: item.count === 0 }">
+              <div class="inv-header" @click="expandedItems.has(item.name) ? expandedItems.delete(item.name) : expandedItems.add(item.name)">
+                <span>{{ item.name }}<span v-if="item.count > 0" class="item-count"> ×{{ item.count }}</span></span>
+                <span v-if="item.count > 0" class="fold-arrow tiny">{{ expandedItems.has(item.name) ? '−' : '+' }}</span>
+              </div>
+              <div v-if="expandedItems.has(item.name) && itemDesc[item.name]" class="inv-desc">{{ itemDesc[item.name] }}</div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -152,17 +261,22 @@ function toggle(key: string) {
 .fold-toggle:hover { opacity: 0.8; }
 .fold-arrow { font-size: 10px; color: var(--c-text-dim); }
 .fold-arrow.small { font-size: 9px; }
+.fold-arrow.tiny { font-size: 8px; color: var(--c-text-dim); }
 .fold-body { margin-top: 4px; }
 .fold-cat { margin-bottom: 2px; border: 1px solid var(--c-border-light); border-radius: 4px; overflow: hidden; }
 .fold-cat-header { display: flex; align-items: center; gap: 6px; padding: 5px 8px; cursor: pointer; font-size: 12px; font-weight: 500; background: rgba(255,255,255,0.03); user-select: none; }
 .fold-cat-header:hover { background: var(--c-primary-bg); }
 .fold-cat-body { border-top: 1px solid var(--c-border-light); padding: 4px 8px; }
+.inv-subcat { border-bottom: 1px solid var(--c-border-light); }
+.inv-subcat:last-child { border-bottom: none; }
+.inv-subcat-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; cursor: pointer; font-size: 11px; font-weight: 500; color: var(--c-text-dim); user-select: none; }
+.inv-subcat-header:hover { opacity: 0.8; }
+.inv-subcat-body { padding-left: 8px; }
 .inv-item { border-bottom: 1px solid var(--c-border-light); }
 .inv-item:last-child { border-bottom: none; }
 .inv-item.empty { color: var(--c-text-muted); font-style: italic; }
 .inv-header { display: flex; align-items: center; justify-content: space-between; padding: 3px 0; cursor: pointer; font-size: 11px; color: var(--c-text); user-select: none; }
 .inv-header:hover { opacity: 0.8; }
 .inv-desc { font-size: 10px; color: var(--c-text-muted); padding: 0 0 4px 0; }
-.fold-arrow.tiny { font-size: 8px; color: var(--c-text-dim); }
 .item-count { font-size: 10px; color: var(--c-primary); font-weight: 600; }
 </style>

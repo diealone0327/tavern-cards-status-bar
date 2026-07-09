@@ -72,6 +72,7 @@ function depravityColor(val: number): string {
           <div v-for="npc in red颜" :key="npc.name" class="npc-item" :class="{ active: npc.isActive }">
             <div class="npc-header" @click="toggleNpc('红颜|' + npc.name)">
               <span class="npc-name">{{ npc.name }}</span>
+              <span v-if="npc.灵根" class="tag tag-ligen">{{ npc.灵根 }}</span>
               <span v-if="npc.isActive" class="tag tag-accent">当前</span>
               <span class="fold-arrow tiny">{{ expandedNpcs.has('红颜|' + npc.name) ? '−' : '+' }}</span>
             </div>
@@ -102,6 +103,7 @@ function depravityColor(val: number): string {
           <div v-for="npc in others" :key="npc.name" class="npc-item" :class="{ active: npc.isActive }">
             <div class="npc-header" @click="toggleNpc('其他|' + npc.name)">
               <span class="npc-name">{{ npc.name }}</span>
+              <span v-if="npc.灵根" class="tag tag-ligen">{{ npc.灵根 }}</span>
               <span v-if="npc.isActive" class="tag tag-accent">当前</span>
               <span class="fold-arrow tiny">{{ expandedNpcs.has('其他|' + npc.name) ? '−' : '+' }}</span>
             </div>
@@ -144,6 +146,7 @@ function depravityColor(val: number): string {
 .npc-stat-row { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
 .mini-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; max-width: 60px; }
 .mini-fill { height: 100%; border-radius: 2px; transition: width 0.3s ease; }
+.tag-ligen { background: rgba(91,155,213,0.15); color: var(--c-primary); padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 500; }
 .tag-accent { background: var(--c-accent-bg); color: var(--c-accent); padding: 1px 4px; border-radius: 3px; font-size: 9px; }
 .bottleneck-tag { display: inline-block; margin-left: 4px; padding: 0 4px; border-radius: 2px; font-size: 9px; font-weight: 600; color: #fff; background: var(--c-danger); vertical-align: middle; }
 .stat-label { color: var(--c-text-dim); font-size: 11px; }

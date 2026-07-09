@@ -2,7 +2,7 @@ export const Schema = z.object({
   // ── 系统 ──
   系统: z.object({
     积分: z.coerce.number().prefault(0),
-    今日签到: z.boolean().prefault(false),
+    今日签到积分: z.coerce.number().prefault(8),
     今日任务: z.boolean().prefault(false),
     当前日期: z.string().prefault(''),
     系统任务内容: z.string().prefault('到西院杂务房报到，熟悉宗门环境'),
@@ -37,6 +37,7 @@ export const Schema = z.object({
     法宝: z.array(z.string()).prefault([]),
     武器: z.array(z.string()).prefault([]),
     功法: z.array(z.string()).prefault([]),
+    杂物: z.array(z.string()).prefault([]),
     技能: z.object({
       NSFW技能: z.array(z.string()).prefault([]),
       修为技能: z.array(z.string()).prefault([]),

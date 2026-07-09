@@ -9,9 +9,9 @@
           "default": 0,
           "type": "number"
         },
-        "今日签到": {
-          "default": false,
-          "type": "boolean"
+        "今日签到积分": {
+          "default": 8,
+          "type": "number"
         },
         "今日任务": {
           "default": false,
@@ -151,6 +151,13 @@
           }
         },
         "功法": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "杂物": {
           "default": [],
           "type": "array",
           "items": {

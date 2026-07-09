@@ -4,7 +4,7 @@ import { computed } from 'vue';
 const props = defineProps<{
   system?: {
     积分?: number;
-    今日签到?: boolean;
+    今日签到积分?: number;
     今日任务?: boolean;
     当前日期?: string;
   };
@@ -58,8 +58,8 @@ const dateParts = computed(() => {
       </div>
       <div class="stat-row" style="flex-direction: column; align-items: flex-start; gap: 1px;">
         <span class="stat-label">签到</span>
-        <span class="stat-value" :class="system.今日签到 ? 'success' : 'danger'" style="font-size: 14px;">
-          {{ system.今日签到 ? '✅ 已签到' : '⬜ 未签到' }}
+        <span class="stat-value success" style="font-size: 14px;">
+          ✅ 已签到<span v-if="system.今日签到积分" class="signin-bonus">+{{ system.今日签到积分 }}</span>
         </span>
       </div>
       <div class="stat-row" style="flex-direction: column; align-items: flex-start; gap: 1px;">
@@ -94,6 +94,13 @@ const dateParts = computed(() => {
   background: rgba(255,255,255,0.08);
   color: var(--c-text);
   border: 1px solid var(--c-border-light);
+}
+.signin-bonus {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--c-primary);
 }
 .solar-tag {
   display: inline-block;

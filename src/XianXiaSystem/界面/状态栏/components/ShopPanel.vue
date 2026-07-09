@@ -11,6 +11,7 @@ const props = defineProps<{
 
 const panelOpen = ref(false);
 const openCategories = ref<Set<number>>(new Set());
+const openSubCategories = ref<Set<string>>(new Set());
 const openItems = ref<Set<string>>(new Set());
 
 const ownedItems = computed(() => {
@@ -33,6 +34,12 @@ function toggleCategory(idx: number) {
   const s = new Set(openCategories.value);
   s.has(idx) ? s.delete(idx) : s.add(idx);
   openCategories.value = s;
+}
+
+function toggleSubCategory(key: string) {
+  const s = new Set(openSubCategories.value);
+  s.has(key) ? s.delete(key) : s.add(key);
+  openSubCategories.value = s;
 }
 
 function toggleItem(key: string) {
@@ -59,11 +66,53 @@ function toggleItem(key: string) {
       >
         <div class="shop-cat-header" @click="toggleCategory(ci)">
           <span>{{ cat.icon }} {{ cat.name }}</span>
-          <span class="cat-count">({{ cat.items.length }})</span>
+          <span class="cat-count">({{ cat.subCategories ? cat.subCategories.length + '阶' : cat.items.length }})</span>
           <span class="shop-arrow small">{{ openCategories.has(ci) ? '▼' : '▶' }}</span>
         </div>
 
-        <div v-if="openCategories.has(ci)" class="shop-items">
+        <!-- 有子目录: 按等级显示 -->
+        <div v-if="openCategories.has(ci) && cat.subCategories" class="shop-subcats">
+          <div
+            v-for="sub in cat.subCategories"
+            :key="sub.name"
+            class="shop-subcat"
+          >
+            <div class="shop-subcat-header" @click="toggleSubCategory(cat.name + '|' + sub.name)">
+              <span class="subcat-name">{{ sub.name }}</span>
+              <span class="cat-count">({{ sub.items.length }})</span>
+              <span class="shop-arrow tiny">{{ openSubCategories.has(cat.name + '|' + sub.name) ? '▼' : '▶' }}</span>
+            </div>
+
+            <div v-if="openSubCategories.has(cat.name + '|' + sub.name)" class="shop-items">
+              <div
+                v-for="item in sub.items"
+                :key="item.name"
+                class="shop-item"
+              >
+                <div class="shop-item-header" @click="toggleItem(sub.name + '|' + item.name)">
+                  <span class="shop-item-name">{{ item.name }}</span>
+                  <span v-if="isOwned(item.name)" class="stype-tag" style="background:rgba(107,191,89,0.15);color:var(--c-success);font-size:9px;">已购买</span>
+                  <span class="shop-item-price">{{ item.price }}</span>
+                  <span class="shop-arrow tiny">{{ openItems.has(sub.name + '|' + item.name) ? '−' : '+' }}</span>
+                </div>
+
+                <div v-if="openItems.has(sub.name + '|' + item.name)" class="shop-item-detail">
+                  <div class="stat-row">
+                    <span class="stat-label">效果</span>
+                    <span class="stat-value" style="text-align: right; max-width: 200px;">{{ item.effect }}</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-label">备注</span>
+                    <span class="stat-value" style="text-align: right; max-width: 200px;">{{ item.note }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 无子目录: 平铺显示 -->
+        <div v-if="openCategories.has(ci) && !cat.subCategories" class="shop-items">
           <div
             v-for="item in cat.items"
             :key="item.name"
@@ -128,6 +177,33 @@ function toggleItem(key: string) {
   margin-top: 4px;
 }
 
+.shop-subcats {
+  border-top: 1px solid var(--c-border-light);
+}
+.shop-subcat {
+  border-bottom: 1px solid var(--c-border-light);
+}
+.shop-subcat:last-child {
+  border-bottom: none;
+}
+.shop-subcat-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 20px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-text-dim);
+  background: rgba(255,255,255,0.02);
+  user-select: none;
+}
+.shop-subcat-header:hover {
+  background: var(--c-primary-bg);
+}
+.subcat-name {
+  color: var(--c-text);
+}
 .shop-category {
   margin-bottom: 2px;
   border: 1px solid var(--c-border-light);
