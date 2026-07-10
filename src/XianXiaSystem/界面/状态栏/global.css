@@ -68,6 +68,9 @@ body {
 .tag-danger { background: rgba(224, 80, 80, 0.15); color: var(--c-danger); }
 .tag-accent { background: var(--c-accent-bg); color: var(--c-accent); }
 
+/* ── 境界标签 ── */
+.realm-tag { font-size: 10px; color: var(--c-accent); opacity: 0.85; }
+
 /* ── 进度条 ── */
 .progress-bar {
   height: 4px;

@@ -10,6 +10,7 @@ defineProps<{
     宗门任务内容?: string;
     宗门任务进度?: number;
     宗门任务奖励?: string;
+    宗门任务待提交?: boolean;
   };
 }>();
 
@@ -70,6 +71,7 @@ function toggle(key: string) {
               <div class="mini-bar"><div class="mini-fill" :style="{ width: (taskData.宗门任务进度 ?? 0) + '%' }" /></div>
               <span class="stat-value primary">{{ taskData.宗门任务进度 ?? 0 }}%</span>
             </div>
+            <div v-if="taskData.宗门任务待提交" class="task-submit-hint">⚠️ 任务已完成，回宗门任务堂交付</div>
             <div class="task-reward" v-if="taskData.宗门任务奖励">
               <span class="stat-label">奖励</span>
               <span class="stat-value success">{{ taskData.宗门任务奖励 }}</span>
@@ -102,6 +104,7 @@ function toggle(key: string) {
 .mini-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; max-width: 120px; }
 .mini-fill { height: 100%; border-radius: 2px; background: var(--c-primary); transition: width 0.3s ease; }
 .task-empty { font-size: 11px; color: var(--c-text-muted); font-style: italic; padding: 2px 0; }
+.task-submit-hint { font-size: 11px; color: #e8a838; padding: 2px 8px; background: rgba(232,168,56,0.1); border-radius: 3px; margin: 3px 0; }
 .stat-label { color: var(--c-text-dim); font-size: 12px; }
 .stat-value { color: var(--c-text); font-weight: 500; font-size: 12px; }
 .stat-value.primary { color: var(--c-primary); }

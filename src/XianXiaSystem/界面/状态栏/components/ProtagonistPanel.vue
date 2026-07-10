@@ -23,6 +23,18 @@ const displayName = computed(() => {
     return '{{user}}';
   }
 });
+
+function getRealm(lv: number): string {
+  if (lv >= 81) return '渡劫';
+  if (lv >= 71) return '大乘';
+  if (lv >= 61) return '合体';
+  if (lv >= 51) return '化神';
+  if (lv >= 41) return '元婴';
+  if (lv >= 31) return '金丹';
+  if (lv >= 21) return '筑基';
+  if (lv >= 11) return '炼气';
+  return '凡人';
+}
 </script>
 
 <template>
@@ -32,19 +44,19 @@ const displayName = computed(() => {
     <div class="grid-2">
       <div class="stat-row">
         <span class="stat-label">💪 力量</span>
-        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.力量 ?? 1 }}</span>
+        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.力量 ?? 1 }} <span class="realm-tag">（{{ getRealm(protagonist.身体强化?.力量 ?? 1) }}）</span></span>
       </div>
       <div class="stat-row">
         <span class="stat-label">💨 速度</span>
-        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.速度 ?? 1 }}</span>
+        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.速度 ?? 1 }} <span class="realm-tag">（{{ getRealm(protagonist.身体强化?.速度 ?? 1) }}）</span></span>
       </div>
       <div class="stat-row">
         <span class="stat-label">🛡️ 防御</span>
-        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.防御 ?? 1 }}</span>
+        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.防御 ?? 1 }} <span class="realm-tag">（{{ getRealm(protagonist.身体强化?.防御 ?? 1) }}）</span></span>
       </div>
       <div class="stat-row">
         <span class="stat-label">🧠 抗性</span>
-        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.抗性 ?? 1 }}</span>
+        <span class="stat-value primary">Lv.{{ protagonist.身体强化?.抗性 ?? 1 }} <span class="realm-tag">（{{ getRealm(protagonist.身体强化?.抗性 ?? 1) }}）</span></span>
       </div>
     </div>
 
