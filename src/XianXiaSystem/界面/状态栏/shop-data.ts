@@ -163,7 +163,6 @@ export const shopCategories: ShopCategory[] = [
       { name: '共感链接', price: '200积分', effect: '可指定两人建立感官链接，双方共享触觉和快感', note: '主动使用' },
       { name: '精液灌体', price: '250积分', effect: '射入对方体内可提升修为进度+5~10', note: '被动技能，射入时自动提升，不限次数' },
       { name: '精液破障', price: '400积分', effect: '射入对方体内，有瓶颈时突破瓶颈并小境界+1', note: '被动技能，有瓶颈时突破+小境界+1' },
-      { name: '加藤鹰之手', price: '80积分', effect: '手指灵活度和敏感度大幅提升，手技出神入化', note: '被动技能' },
       { name: '入梦', price: '300积分', effect: '进入他人梦境，交流或窥探记忆秘密', note: '主动技能，需目标睡眠' },
       { name: '透视眼', price: '250积分', effect: '看穿衣物墙壁遮挡，透视储物袋或灵力流转', note: '主动技能，消耗精神力' },
     ],
@@ -229,7 +228,7 @@ export const shopCategories: ShopCategory[] = [
       { name: '耐久度+2', price: '15积分', effect: '耐久度永久+2（初始30，上限60）', note: '属性点可叠加使用' },
       { name: '长度+1', price: '20积分', effect: '长度永久+1cm（初始10cm，上限25cm）', note: '属性点可叠加使用' },
       { name: '粗度+0.1', price: '20积分', effect: '粗度永久+0.1cm（初始3cm，上限5cm）', note: '属性点可叠加使用' },
-      { name: '精液量+10%', price: '25积分', effect: '精液量永久+10%（初始100%，上限1000%）', note: '属性点可叠加使用' },
+      { name: '精液量+10%', price: '25积分', effect: '精液量永久+10%（初始100%，上限250%）', note: '属性点可叠加使用' },
     ],
   },
   {

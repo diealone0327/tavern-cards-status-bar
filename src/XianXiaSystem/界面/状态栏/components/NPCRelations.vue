@@ -38,9 +38,9 @@ function affinityColor(val: number): string {
 }
 
 function depravityColor(val: number): string {
-  if (val >= 70) return 'var(--c-danger)';
-  if (val >= 40) return 'var(--c-warning)';
-  if (val >= 10) return 'var(--c-primary)';
+  if (val >= 201) return 'var(--c-danger)';
+  if (val >= 121) return 'var(--c-warning)';
+  if (val >= 61) return 'var(--c-primary)';
   return 'var(--c-text-dim)';
 }
 </script>

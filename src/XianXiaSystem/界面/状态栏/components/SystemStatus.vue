@@ -85,7 +85,7 @@ const dateParts = computed(() => {
           </div>
           <div class="intro-section">
             <div class="intro-s-title">❤️ NPC关系</div>
-            <p>好感度(0~300)和沉沦(0~100,女角专属)。积极互动/送礼增加好感，亲密接触增加沉沦。</p>
+            <p>好感度(0~300)和沉沦(0~300,女角专属)。积极互动/送礼增加好感，亲密接触增加沉沦。</p>
           </div>
         </div>
       </div>
