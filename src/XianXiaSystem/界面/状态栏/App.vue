@@ -4,6 +4,7 @@ import { useDataStore } from './store';
 import SystemStatus from './components/SystemStatus.vue';
 import TaskPanel from './components/TaskPanel.vue';
 import ProtagonistPanel from './components/ProtagonistPanel.vue';
+import SectInfo from './components/SectInfo.vue';
 import CurrentScene from './components/CurrentScene.vue';
 import AttributesSkillsPanel from './components/AttributesSkillsPanel.vue';
 import InventoryPanel from './components/InventoryPanel.vue';
@@ -20,6 +21,9 @@ const d = computed(() => store.data);
     <SystemStatus :system="d?.系统" />
     <TaskPanel :task-data="d?.系统" />
     <ProtagonistPanel :protagonist="d?.主角" />
+
+    <!-- 当前宗门 -->
+    <SectInfo :sect="d?.当前宗门" />
 
     <!-- 当前在场角色 -->
     <CurrentScene :current-npc="d?.当前互动NPC" />
