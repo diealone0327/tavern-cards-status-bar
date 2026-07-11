@@ -1,5 +1,4 @@
 export const Schema = z.object({
-  // ── 系统 ──
   系统: z.object({
     积分: z.coerce.number().prefault(0),
     今日签到积分: z.coerce.number().prefault(8),
@@ -11,8 +10,8 @@ export const Schema = z.object({
     宗门任务内容: z.string().prefault(''),
     宗门任务进度: z.coerce.number().prefault(0),
     宗门任务奖励: z.string().prefault(''),
-  }),
-  // ── 主角 ──
+    宗门任务待提交: z.boolean().prefault(false),
+  }).prefault({}),
   主角: z.object({
     姓名: z.string().prefault(''),
     年龄: z.coerce.number().prefault(16),
@@ -24,14 +23,14 @@ export const Schema = z.object({
       速度: z.coerce.number().transform(v => _.clamp(v, 1, 100)).prefault(1),
       防御: z.coerce.number().transform(v => _.clamp(v, 1, 100)).prefault(1),
       抗性: z.coerce.number().transform(v => _.clamp(v, 1, 100)).prefault(1),
-    }).prefault({力量:1, 速度:1, 防御:1, 抗性:1}),
+    }).prefault({}),
     属性: z.object({
       长度: z.coerce.number().transform(v => _.clamp(v, 0, 25)).prefault(10),
       粗度: z.coerce.number().transform(v => _.clamp(v, 0, 5)).prefault(3),
       硬度: z.coerce.number().transform(v => _.clamp(v, 0, 5)).prefault(3),
       耐久度: z.coerce.number().transform(v => _.clamp(v, 0, 60)).prefault(30),
       精液量: z.coerce.number().transform(v => _.clamp(v, 100, 250)).prefault(100),
-    }),
+    }).prefault({}),
     道具: z.array(z.string()).prefault([]),
     丹药: z.array(z.string()).prefault([]),
     法宝: z.array(z.string()).prefault([]),
@@ -42,12 +41,11 @@ export const Schema = z.object({
       NSFW技能: z.array(z.string()).prefault([]),
       修为技能: z.array(z.string()).prefault([]),
       生活技能: z.array(z.string()).prefault([]),
-    }),
-  }),
-  // ── NPC关系（动态记录，键为NPC名称） ──
+    }).prefault({}),
+  }).prefault({}),
   NPC关系: z.record(z.object({
-    好感度: z.coerce.number().transform(v => _.clamp(v, 0, 300)).prefault(30),
-    沉沦: z.coerce.number().prefault(0),
+    好感度: z.coerce.number().transform(v => _.clamp(v, 0, 300)).prefault(5),
+    沉沦: z.coerce.number().transform(v => _.clamp(v, 0, 300)).prefault(0),
     性别: z.string().prefault(''),
     描述: z.string().prefault(''),
     年纪: z.coerce.number().prefault(0),
@@ -58,9 +56,7 @@ export const Schema = z.object({
     瓶颈: z.boolean().prefault(false),
     寿元: z.coerce.number().prefault(150),
   })).prefault({}),
-  // ── 当前互动NPC ──
   当前互动NPC: z.string().prefault(''),
-  // ── 当前场景NPC（在场所有有名有姓的NPC名单） ──
   当前场景NPC: z.array(z.string()).prefault([]),
 });
 export type Schema = z.output<typeof Schema>;
