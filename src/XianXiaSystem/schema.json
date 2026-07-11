@@ -3,6 +3,7 @@
   "type": "object",
   "properties": {
     "系统": {
+      "default": {},
       "type": "object",
       "properties": {
         "积分": {
@@ -44,10 +45,15 @@
         "宗门任务奖励": {
           "default": "",
           "type": "string"
+        },
+        "宗门任务待提交": {
+          "default": false,
+          "type": "boolean"
         }
       }
     },
     "主角": {
+      "default": {},
       "type": "object",
       "properties": {
         "姓名": {
@@ -71,12 +77,7 @@
           "type": "number"
         },
         "身体强化": {
-          "default": {
-            "力量": 1,
-            "速度": 1,
-            "防御": 1,
-            "抗性": 1
-          },
+          "default": {},
           "type": "object",
           "properties": {
             "力量": {
@@ -98,6 +99,7 @@
           }
         },
         "属性": {
+          "default": {},
           "type": "object",
           "properties": {
             "长度": {
@@ -165,6 +167,7 @@
           }
         },
         "技能": {
+          "default": {},
           "type": "object",
           "properties": {
             "NSFW技能": {
@@ -190,11 +193,7 @@
             }
           }
         }
-      },
-      "required": [
-        "属性",
-        "技能"
-      ]
+      }
     },
     "NPC关系": {
       "default": {},
@@ -206,7 +205,7 @@
         "type": "object",
         "properties": {
           "好感度": {
-            "default": 30,
+            "default": 5,
             "type": "number"
           },
           "沉沦": {
@@ -263,9 +262,5 @@
         "type": "string"
       }
     }
-  },
-  "required": [
-    "系统",
-    "主角"
-  ]
+  }
 }
