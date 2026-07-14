@@ -55,6 +55,8 @@ export const Schema = z.object({
     修为进度: z.coerce.number().prefault(0),
     瓶颈: z.boolean().prefault(false),
     寿元: z.coerce.number().prefault(150),
+    所属宗门: z.string().prefault(''),
+    职位: z.string().prefault(''),
   })).prefault({}),
   当前互动NPC: z.string().prefault(''),
   当前场景NPC: z.array(z.string()).prefault([]),

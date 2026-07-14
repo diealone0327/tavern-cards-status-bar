@@ -98,9 +98,8 @@ const dateParts = computed(() => {
         </span>
       </div>
       <div class="stat-row" style="flex-direction: column; align-items: flex-start; gap: 1px;">
-        <span class="stat-label">签到</span>
         <span class="stat-value success" style="font-size: 14px;">
-          ✅ 已签到<span v-if="system.今日签到积分 && system.今日签到积分 > 0" class="signin-bonus">+{{ system.今日签到积分 }}</span>
+          已签到 <span class="signin-bonus">+{{ system.今日签到积分 ?? 0 }}</span>
         </span>
       </div>
       <div class="stat-row" style="flex-direction: column; align-items: flex-start; gap: 1px;">

@@ -247,6 +247,14 @@
           "寿元": {
             "default": 150,
             "type": "number"
+          },
+          "所属宗门": {
+            "default": "",
+            "type": "string"
+          },
+          "职位": {
+            "default": "",
+            "type": "string"
           }
         }
       }

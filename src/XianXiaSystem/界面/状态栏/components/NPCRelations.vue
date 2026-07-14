@@ -2,14 +2,15 @@
 import { ref, computed } from 'vue';
 
 const props = defineProps<{
-  relations?: Record<string, { 好感度?: number; 沉沦?: number; 寿元?: number; 年纪?: number; 修为?: string; 小境界?: number; 修为进度?: number; 瓶颈?: boolean; 性别?: string; 灵根?: string; 描述?: string }>;
+  relations?: Record<string, { 好感度?: number; 沉沦?: number; 寿元?: number; 年纪?: number; 修为?: string; 小境界?: number; 修为进度?: number; 瓶颈?: boolean; 性别?: string; 灵根?: string; 描述?: string; 所属宗门?: string; 职位?: string }>;
   currentNpc?: string;
 }>();
 
 const panelOpen = ref(false);
 const expandedNpcs = ref<Set<string>>(new Set());
+const openSects = ref<Set<string>>(new Set());
 
-const red颜 = computed(() => {
+const allFemale = computed(() => {
   if (!props.relations) return [];
   return Object.entries(props.relations)
     .filter(([, data]) => data.性别 === '女')
@@ -17,11 +18,28 @@ const red颜 = computed(() => {
     .map(([name, data]) => ({ name, ...data, isActive: name === props.currentNpc }));
 });
 
+const sects = computed(() => {
+  const map = new Map<string, typeof allFemale.value>();
+  for (const npc of allFemale.value) {
+    const sect = npc.所属宗门 || '未知';
+    if (!map.has(sect)) map.set(sect, []);
+    map.get(sect)!.push(npc);
+  }
+  return Array.from(map.entries()).sort(([a], [b]) => {
+    if (a === '未知') return 1;
+    if (b === '未知') return -1;
+    return a.localeCompare(b);
+  });
+});
 
-function toggleCat(key: string) {
-  const s = new Set(catOpen.value);
+function stripSubStage(realm: string): string {
+  return realm.replace(/(初期|中期|后期)$/, '');
+}
+
+function toggleSect(key: string) {
+  const s = new Set(openSects.value);
   s.has(key) ? s.delete(key) : s.add(key);
-  catOpen.value = s;
+  openSects.value = s;
 }
 
 function toggleNpc(name: string) {
@@ -53,10 +71,19 @@ function depravityColor(val: number): string {
     </div>
 
     <div v-if="panelOpen" class="fold-body">
-      <div v-if="red颜.length === 0" class="empty-tip">暂无</div>
-      <div v-for="npc in red颜" :key="npc.name" class="npc-item" :class="{ active: npc.isActive }">
-        <div class="npc-header" @click="toggleNpc(npc.name)">
-              <span class="npc-name">{{ npc.name }}</span>
+      <div v-if="allFemale.length === 0" class="empty-tip">暂无</div>
+
+      <div v-for="[sect, npcs] in sects" :key="sect" class="fold-cat">
+        <div class="fold-cat-header" @click="toggleSect(sect)">
+          <span>▣ {{ sect }}</span>
+          <span class="cat-count">({{ npcs.length }})</span>
+          <span class="fold-arrow small" style="margin-left:auto;">{{ openSects.has(sect) ? '▼' : '▶' }}</span>
+        </div>
+
+        <div v-if="openSects.has(sect)" class="fold-cat-body">
+          <div v-for="npc in npcs" :key="npc.name" class="npc-item" :class="{ active: npc.isActive }">
+            <div class="npc-header" @click="toggleNpc(npc.name)">
+              <span class="npc-name">{{ npc.职位 ? npc.职位 + '·' : '' }}{{ npc.name }}</span>
               <span v-if="npc.灵根" class="tag tag-ligen">{{ npc.灵根 }}</span>
               <span v-if="npc.isActive" class="tag tag-accent">当前</span>
               <span class="fold-arrow tiny">{{ expandedNpcs.has(npc.name) ? '−' : '+' }}</span>
@@ -66,13 +93,15 @@ function depravityColor(val: number): string {
               <div class="npc-stat-row"><span class="stat-label">好感</span><div class="mini-bar"><div class="mini-fill" :style="{ width: Math.min(npc.好感度 ?? 0, 100) + '%', background: affinityColor(npc.好感度 ?? 0) }" /></div><span class="stat-value" :style="{ color: affinityColor(npc.好感度 ?? 0) }">{{ npc.好感度 ?? 0 }}</span></div>
               <div class="npc-stat-row" v-if="npc.沉沦 !== undefined"><span class="stat-label">沉沦</span><div class="mini-bar"><div class="mini-fill" :style="{ width: (npc.沉沦 ?? 0) + '%', background: depravityColor(npc.沉沦 ?? 0) }" /></div><span class="stat-value" :style="{ color: depravityColor(npc.沉沦 ?? 0) }">{{ npc.沉沦 ?? 0 }}</span></div>
               <div class="npc-stat-row"><span class="stat-label">年纪</span><span class="stat-value" style="font-size: 11px;">{{ (npc.年纪 && npc.年纪 > 0) ? npc.年纪 + '岁' : '—' }}</span></div>
-              <div class="npc-stat-row"><span class="stat-label">修为</span><span class="stat-value" style="font-size: 11px;">{{ npc.修为 || '—' }}<span v-if="npc.瓶颈" class="bottleneck-tag">瓶颈</span></span></div>
+              <div class="npc-stat-row"><span class="stat-label">修为</span><span class="stat-value" style="font-size: 11px;">{{ stripSubStage(npc.修为 || '—') }}<span v-if="npc.瓶颈" class="bottleneck-tag">瓶颈</span></span></div>
               <div class="npc-stat-row" v-if="npc.小境界"><span class="stat-label">小境界</span><span class="stat-value" style="font-size: 11px;">{{ npc.小境界 }}</span></div>
               <div class="npc-stat-row" v-if="npc.灵根"><span class="stat-label">灵根</span><span class="stat-value" style="font-size: 11px;">{{ npc.灵根 }}</span></div>
               <div class="npc-stat-row"><span class="stat-label">修为进度</span><div class="mini-bar"><div class="mini-fill" :style="{ width: (npc.修为进度 ?? 0) + '%', background: 'var(--c-primary)' }" /></div><span class="stat-value primary">{{ npc.修为进度 ?? 0 }}%</span></div>
               <div class="npc-stat-row"><span class="stat-label">寿元</span><span class="stat-value" style="font-size: 11px;">{{ npc.寿元 ?? '?' }}年</span></div>
             </div>
           </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
