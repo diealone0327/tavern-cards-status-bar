@@ -1,5 +1,9 @@
+function safeObj(schema) {
+  return z.union([schema, z.null(), z.undefined()]).transform(v => (v && typeof v === 'object' ? v : {}));
+}
+
 export const Schema = z.object({
-  系统: z.object({
+  系统: safeObj(z.object({
     积分: z.coerce.number().prefault(0),
     今日签到积分: z.coerce.number().prefault(8),
     今日任务: z.boolean().prefault(false),
@@ -11,8 +15,8 @@ export const Schema = z.object({
     宗门任务进度: z.coerce.number().prefault(0),
     宗门任务奖励: z.string().prefault(''),
     宗门任务待提交: z.boolean().prefault(false),
-  }).prefault({}),
-  主角: z.object({
+  })),
+  主角: safeObj(z.object({
     姓名: z.string().prefault(''),
     年龄: z.coerce.number().prefault(16),
     性别: z.string().prefault(''),
@@ -36,13 +40,14 @@ export const Schema = z.object({
     法宝: z.array(z.string()).prefault([]),
     武器: z.array(z.string()).prefault([]),
     功法: z.array(z.string()).prefault([]),
+    衣服: z.array(z.string()).prefault([]),
     杂物: z.array(z.string()).prefault([]),
     技能: z.object({
       NSFW技能: z.array(z.string()).prefault([]),
       修为技能: z.array(z.string()).prefault([]),
       生活技能: z.array(z.string()).prefault([]),
     }).prefault({}),
-  }).prefault({}),
+  })),
   NPC关系: z.record(z.object({
     好感度: z.coerce.number().transform(v => _.clamp(v, 0, 300)).prefault(5),
     沉沦: z.coerce.number().transform(v => _.clamp(v, 0, 300)).prefault(0),
@@ -60,5 +65,18 @@ export const Schema = z.object({
   })).prefault({}),
   当前互动NPC: z.string().prefault(''),
   当前场景NPC: z.array(z.string()).prefault([]),
+  当前宗门: z.object({
+    名称: z.string().prefault(''),
+    品级: z.string().prefault(''),
+    介绍: z.string().prefault(''),
+    掌门: z.string().prefault(''),
+    掌门修为: z.string().prefault(''),
+    长老: z.array(z.string()).prefault([]),
+    太上长老: z.array(z.string()).prefault([]),
+    亲传: z.array(z.string()).prefault([]),
+    核心: z.coerce.number().prefault(0),
+    内门: z.coerce.number().prefault(0),
+    外门: z.coerce.number().prefault(0),
+  }).prefault({}),
 });
 export type Schema = z.output<typeof Schema>;

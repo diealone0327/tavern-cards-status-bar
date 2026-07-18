@@ -25,6 +25,7 @@ const displayName = computed(() => {
 });
 
 function getRealm(lv: number): string {
+  if (lv >= 91) return '仙人';
   if (lv >= 81) return '渡劫';
   if (lv >= 71) return '大乘';
   if (lv >= 61) return '合体';

@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 
 const props = defineProps<{
-  protagonist?: { 道具?: string[]; 丹药?: string[]; 法宝?: string[]; 武器?: string[]; 功法?: string[]; 杂物?: string[]; };
+  protagonist?: { 道具?: string[]; 丹药?: string[]; 法宝?: string[]; 武器?: string[]; 功法?: string[]; 衣服?: string[]; 杂物?: string[]; };
 }>();
 
 const panelOpen = ref(false);
@@ -181,6 +181,7 @@ const categories = computed(() => {
     ['法宝', '🔮', p.法宝 || []],
     ['武器', '⚔️', p.武器 || []],
     ['功法', '📖', p.功法 || []],
+    ['衣服', '👗', p.衣服 || []],
     ['其他', '📦', p.杂物 || []],
   ];
   return config.map(([label, icon, items]): InvCategory => {
