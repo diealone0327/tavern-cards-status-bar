@@ -543,7 +543,7 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
 
       if (
         ['vue', 'vue-router'].every(key => request !== key) &&
-        ['pixi', 'react', 'vue', 'pinia'].some(key => request.includes(key))
+        ['pixi', 'react', 'vue'].some(key => request.includes(key))
       ) {
         return callback();
       }
@@ -559,10 +559,6 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
       };
       if (request in global) {
         return callback(null, 'var ' + global[request as keyof typeof global]);
-      }
-      // Bundle pinia for status bars (not available as global)
-      if (request === 'pinia' || request.startsWith('pinia/')) {
-        return callback();
       }
       const cdn = {
         sass: 'https://jspm.dev/sass',
