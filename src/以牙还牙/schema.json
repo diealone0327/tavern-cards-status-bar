@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "default": {},
+  "type": "object",
+  "properties": {
+    "世界": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "日期": {
+          "default": "",
+          "type": "string",
+          "description": "格式 YYYY/MM/DD，如 2026/08/24；不做格式强校验，仅作时间连续性参考"
+        },
+        "时间段": {
+          "default": "上午",
+          "type": "string",
+          "enum": [
+            "清晨",
+            "上午",
+            "中午",
+            "下午",
+            "傍晚",
+            "夜晚",
+            "深夜"
+          ]
+        },
+        "当前位置": {
+          "default": "",
+          "type": "string",
+          "description": "当前场景，如 <user>家 / 林家住宅 / 公司 / 咖啡馆"
+        }
+      }
+    },
+    "主线": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "阶段": {
+          "default": "发现",
+          "type": "string",
+          "enum": [
+            "发现",
+            "布局",
+            "攻略",
+            "冲突",
+            "收束"
+          ]
+        }
+      }
+    },
+    "user": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "金钱": {
+          "default": 0,
+          "type": "number"
+        }
+      }
+    },
+    "白凝冰": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "好感度": {
+          "default": 0,
+          "type": "number"
+        },
+        "欲望度": {
+          "default": 0,
+          "type": "number"
+        },
+        "线阶段": {
+          "default": "未接触",
+          "type": "string",
+          "enum": [
+            "未接触",
+            "初识",
+            "暧昧",
+            "深入",
+            "达成"
+          ]
+        },
+        "亲密状态": {
+          "default": "未发生",
+          "type": "string",
+          "enum": [
+            "未发生",
+            "暧昧接触",
+            "亲吻",
+            "深入亲密"
+          ]
+        }
+      }
+    },
+    "林婉": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "好感度": {
+          "default": 0,
+          "type": "number"
+        },
+        "欲望度": {
+          "default": 0,
+          "type": "number"
+        },
+        "线阶段": {
+          "default": "未接触",
+          "type": "string",
+          "enum": [
+            "未接触",
+            "初识",
+            "暧昧",
+            "深入",
+            "达成"
+          ]
+        },
+        "亲密状态": {
+          "default": "未发生",
+          "type": "string",
+          "enum": [
+            "未发生",
+            "暧昧接触",
+            "亲吻",
+            "深入亲密"
+          ]
+        }
+      }
+    },
+    "林妙可": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "好感度": {
+          "default": 0,
+          "type": "number"
+        },
+        "欲望度": {
+          "default": 0,
+          "type": "number"
+        },
+        "线阶段": {
+          "default": "未接触",
+          "type": "string",
+          "enum": [
+            "未接触",
+            "初识",
+            "暧昧",
+            "深入",
+            "达成"
+          ]
+        },
+        "亲密状态": {
+          "default": "未发生",
+          "type": "string",
+          "enum": [
+            "未发生",
+            "暧昧接触",
+            "亲吻",
+            "深入亲密"
+          ]
+        }
+      }
+    },
+    "宋慧茹": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "好感度": {
+          "default": 0,
+          "type": "number"
+        },
+        "欲望度": {
+          "default": 0,
+          "type": "number"
+        },
+        "线阶段": {
+          "default": "未接触",
+          "type": "string",
+          "enum": [
+            "未接触",
+            "初识",
+            "暧昧",
+            "深入",
+            "达成"
+          ]
+        },
+        "亲密状态": {
+          "default": "未发生",
+          "type": "string",
+          "enum": [
+            "未发生",
+            "暧昧接触",
+            "亲吻",
+            "深入亲密"
+          ]
+        }
+      }
+    },
+    "柳如烟": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "剧情开关": {
+          "default": "未回归",
+          "type": "string",
+          "enum": [
+            "未回归",
+            "求复合",
+            "挑衅"
+          ]
+        }
+      }
+    },
+    "后宫": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "已攻略": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "白凝冰",
+              "林婉",
+              "林妙可",
+              "宋慧茹"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,138 @@
+/* ── 《以牙还牙》状态栏：都市夜色档案 ──
+   语义色：冷蓝=信息/主线，暖橙=好感度，玫红=欲望度，金=达成 */
+:root {
+  --c-bg: rgba(12, 14, 20, 0.55);
+  --c-surface: rgba(22, 26, 38, 0.92);
+  --c-surface-deep: rgba(16, 19, 29, 0.95);
+  --c-primary: #5b9bd5;
+  --c-primary-dim: #3d6e9c;
+  --c-affection: #e8a04a;
+  --c-affection-bg: rgba(232, 160, 74, 0.14);
+  --c-desire: #e05080;
+  --c-desire-bg: rgba(224, 80, 128, 0.14);
+  --c-success: #d4af37;
+  --c-success-bg: rgba(212, 175, 55, 0.14);
+  --c-danger: #e05050;
+  --c-warning: #e8a838;
+  --c-text: #e6e9f2;
+  --c-text-dim: #9aa3b8;
+  --c-text-muted: #5d6678;
+  --c-border: rgba(91, 155, 213, 0.22);
+  --c-border-light: rgba(255, 255, 255, 0.06);
+  --c-glow: rgba(91, 155, 213, 0.18);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--c-text);
+  background: transparent;
+  overflow-x: hidden;
+}
+
+#app { padding: 8px; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 2px; }
+
+/* ── 档案卡 ── */
+.dossier-card {
+  position: relative;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-primary);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.dossier-card.done {
+  border-left-color: var(--c-success);
+  box-shadow: 0 2px 12px rgba(212, 175, 55, 0.12);
+}
+
+/* ── 标题行 ── */
+.dossier-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--c-border-light);
+}
+.dossier-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--c-text);
+}
+.dossier-title .en-mark {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--c-text-muted);
+  margin-left: 6px;
+  font-weight: 400;
+}
+.dossier-sub {
+  font-size: 10px;
+  color: var(--c-text-muted);
+  margin-left: auto;
+}
+
+/* ── 徽章 ── */
+.badge {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.badge-gray { background: rgba(255, 255, 255, 0.08); color: var(--c-text-dim); }
+.badge-blue { background: rgba(91, 155, 213, 0.16); color: var(--c-primary); }
+.badge-orange { background: var(--c-affection-bg); color: var(--c-affection); }
+.badge-purple { background: rgba(150, 111, 214, 0.18); color: #a885e0; }
+.badge-pink { background: var(--c-desire-bg); color: var(--c-desire); }
+.badge-gold { background: var(--c-success-bg); color: var(--c-success); }
+.badge-red { background: rgba(224, 80, 80, 0.16); color: var(--c-danger); }
+
+/* ── 双维度条（样式在 GirlCard.vue 作用域内）── */
+
+/* ── 行 ── */
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 2px 0; }
+.stat-label { color: var(--c-text-dim); font-size: 11px; letter-spacing: 1px; }
+.stat-value { color: var(--c-text); font-weight: 600; font-size: 12px; }
+.stat-value.primary { color: var(--c-primary); }
+.stat-value.gold { color: var(--c-success); }
+
+/* ── 后宫名单 ── */
+.harem-list { display: flex; flex-wrap: wrap; gap: 4px; }
+.harem-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  border: 1px dashed var(--c-border-light);
+  color: var(--c-text-muted);
+}
+.harem-chip.lit {
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--c-success);
+  background: var(--c-success-bg);
+}
+
+/* ── 折叠按钮 ── */
+.fold-btn {
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--c-text-muted);
+  user-select: none;
+  transition: color 0.2s;
+}
+.fold-btn:hover { color: var(--c-text-dim); }
