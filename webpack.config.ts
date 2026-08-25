@@ -190,10 +190,7 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
 
   return (_env, argv) => ({
     experiments: {
-      // Frontend UIs (entry.html set) are injected via classic scripts ($('body').load()),
-      // so they must use classic output with a full __webpack_require__ runtime.
-      // Script-only entries keep ESM output (酒馆助手 loads them as modules).
-      outputModule: entry.html === undefined,
+      outputModule: true,
     },
     devtool: argv.mode === 'production' ? 'source-map' : 'eval-source-map',
     watchOptions: {
@@ -223,8 +220,9 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
       asyncChunks: true,
       clean: true,
       publicPath: '',
-      chunkFormat: entry.html === undefined ? undefined : 'array-push',
-      ...(entry.html === undefined ? { library: { type: 'module' } } : {}),
+      library: {
+        type: 'module',
+      },
     },
     module: {
       rules: [
@@ -426,7 +424,7 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
           new HtmlWebpackPlugin({
             template: path.join(import.meta.dirname, entry.html),
             filename: path.parse(entry.html).base,
-            scriptLoading: 'blocking',
+            scriptLoading: 'module',
             cache: false,
           }),
           new HtmlInlineScriptWebpackPlugin(),
@@ -544,14 +542,6 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
       if (
         ['vue', 'vue-router'].every(key => request !== key) &&
         ['pixi', 'react', 'vue'].some(key => request.includes(key))
-      ) {
-        return callback();
-      }
-      // Inline-bundle these npm packages: their CDN ESM form (module-import) breaks
-      // classic-script injection ($('body').load()), which cannot execute import statements.
-      if (
-        ['async-wait-until', 'birpc', 'hookable', 'perfect-debounce', 'pinia'].includes(request) ||
-        request.startsWith('pinia/')
       ) {
         return callback();
       }
