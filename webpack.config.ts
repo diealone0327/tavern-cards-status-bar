@@ -190,7 +190,10 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
 
   return (_env, argv) => ({
     experiments: {
-      outputModule: true,
+      // Frontend UIs (entry.html set) are injected via classic scripts ($('body').load()),
+      // so they must use classic output with a full __webpack_require__ runtime.
+      // Script-only entries keep ESM output (酒馆助手 loads them as modules).
+      outputModule: entry.html === undefined,
     },
     devtool: argv.mode === 'production' ? 'source-map' : 'eval-source-map',
     watchOptions: {
@@ -220,9 +223,8 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
       asyncChunks: true,
       clean: true,
       publicPath: '',
-      library: {
-        type: 'module',
-      },
+      chunkFormat: entry.html === undefined ? undefined : 'array-push',
+      ...(entry.html === undefined ? { library: { type: 'module' } } : {}),
     },
     module: {
       rules: [
