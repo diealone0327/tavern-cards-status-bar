@@ -424,7 +424,7 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
           new HtmlWebpackPlugin({
             template: path.join(import.meta.dirname, entry.html),
             filename: path.parse(entry.html).base,
-            scriptLoading: 'module',
+            scriptLoading: 'blocking',
             cache: false,
           }),
           new HtmlInlineScriptWebpackPlugin(),
@@ -542,6 +542,14 @@ function parse_configuration(entry: Entry): (_env: any, argv: any) => webpack.Co
       if (
         ['vue', 'vue-router'].every(key => request !== key) &&
         ['pixi', 'react', 'vue'].some(key => request.includes(key))
+      ) {
+        return callback();
+      }
+      // Inline-bundle these npm packages: their CDN ESM form (module-import) breaks
+      // classic-script injection ($('body').load()), which cannot execute import statements.
+      if (
+        ['async-wait-until', 'birpc', 'hookable', 'perfect-debounce', 'pinia'].includes(request) ||
+        request.startsWith('pinia/')
       ) {
         return callback();
       }
